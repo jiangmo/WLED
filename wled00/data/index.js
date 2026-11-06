@@ -2684,7 +2684,7 @@ function makePUtil()
 	p.innerHTML = `<div class="presin expanded">${makeP(0)}</div>`;
 	let pTx = gId('p0txt');
 	pTx.focus();
-	pTx.value = eJson.find((o)=>{return o.id==selectedFx}).name;
+	pTx.value = zhLabel(eJson.find((o)=>{return o.id==selectedFx}).name);
 	pTx.select();
 	p.scrollIntoView({
 		behavior: 'smooth',

@@ -73,6 +73,13 @@ test('简化界面保留中文名称，同时移除能力图标', () => {
 	assert.ok(!/[🎨▦♪]/u.test(name));
 });
 
+test('新建预设使用中文默认名称', () => {
+	const expression = index.match(/pTx.value = (.*);/)[1];
+	context.eJson = [{id: 0, name: 'Solid'}];
+	context.selectedFx = 0;
+	assert.equal(vm.runInContext(expression, context), '纯色');
+});
+
 test('设备网页声明简体中文与 UTF-8', () => {
 	for (const file of Object.keys(baseline).filter(f => f.endsWith('.htm'))) {
 		const source = read(file);
