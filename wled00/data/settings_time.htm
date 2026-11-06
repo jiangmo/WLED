@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 	<meta charset="utf-8">
-	<title>Time Settings</title>
+	<title>时间设置</title>
 	<style> html { visibility: hidden; } </style> <!-- prevent white & ugly display while loading, unhidden in loadResources() -->
 	<script>
 	var el=false;
-	var ms=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+	var ms=["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"];
 	var timerCount = 0;
 	var maxTimers;
 	var presets = {};
@@ -42,7 +42,7 @@
 		}
 
 		if (!json) {
-			showToast("Please visit the main UI first to load presets", true);
+			showToast("请先访问主界面以加载预设", true);
 			return;
 		}
 
@@ -60,7 +60,7 @@
 		sortedPresetOptions = '';
 		for (var p of Object.entries(presets)) {
 			var id = p[0];
-			var name = p[1].n || ("Preset " + id);
+			var name = p[1].n || ("预设 " + id);
 			sortedPresetOptions += `<option value="${id}">${id}: ${name}</option>`;
 		}
 	}
@@ -93,7 +93,7 @@
 	function BTa()
 	{
 		timerCount = 0;
-		gId("TMT").innerHTML = "<thead><tr><th>En.</th><th>Type</th><th>Hour</th><th>Minute</th><th></th></tr></thead>";
+		gId("TMT").innerHTML = "<thead><tr><th>启用</th><th>类型</th><th>小时</th><th>分钟</th><th></th></tr></thead>";
 	}
 	function addTimerRow(hour, minute, preset, weekdays, monthStart, dayStart, monthEnd, dayEnd) {
 		if (timerCount >= maxTimers) return;
@@ -113,15 +113,15 @@
 		var dow = weekdays >> 1;
 		var container = gId("TMT");
 		var hourVal = isSpecial ? 0 : hour;
-		var presetOpts = '<option value="0">Delete Timer</option>' + sortedPresetOptions;
+		var presetOpts = "<option value=\"0\">删除定时器</option>" + sortedPresetOptions;
 
 		var weekdayTable = '<table class="tw"><tr><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th></tr><tr>';
 		for (j=1;j<8;j++) weekdayTable += `<td><input id="W${i}${j}" type="checkbox" ${(dow>>(j-1))&1?'checked':''}></td>`;
 		weekdayTable += '</tr></table>';
 
-		var dateRange = `<div id="DR${i}" class="tdr"><span class="tdf">from <select name="M${i}">`;
+		var dateRange = `<div id="DR${i}" class="tdr"><span class="tdf">来自 <select name="M${i}">`;
 		for (j=0;j<12;j++) dateRange += `<option value="${j+1}" ${monthStart==j+1?'selected':''}>${ms[j]}</option>`;
-		dateRange += `</select><input name="D${i}" class="xs" type="number" min="1" max="31" value="${dayStart}"></span><span class="tdf">to <select name="P${i}">`;
+		dateRange += `</select><input name="D${i}" class="xs" type="number" min="1" max="31" value="${dayStart}"></span><span class="tdf">至 <select name="P${i}">`;
 		for (j=0;j<12;j++) dateRange += `<option value="${j+1}" ${monthEnd==j+1?'selected':''}>${ms[j]}</option>`;
 		dateRange += `</select><input name="E${i}" class="xs" type="number" min="1" max="31" value="${dayEnd}"></span></div>`;
 
@@ -132,9 +132,9 @@
 					<input id="W${i}0" type="checkbox" ${enabled ? "checked" : ""}>
 				</td><td>
 					<select id="TS${i}" class="s" onchange="TT(${i})">
-						<option value="0" ${!isSpecial ? "selected" : ""}>Regular</option>
-						<option value="${TIMER_SUNRISE}" ${isSunrise ? "selected" : ""}>Sunrise</option>
-						<option value="${TIMER_SUNSET}" ${isSunset ? "selected" : ""}>Sunset</option>
+						<option value="0" ${!isSpecial ? "selected" : ""}>常规</option>
+						<option value="${TIMER_SUNRISE}" ${isSunrise ? "selected" : ""}>日出</option>
+						<option value="${TIMER_SUNSET}" ${isSunset ? "selected" : ""}>日落</option>
 					</select><br>
 				</td><td>
 					<input ${isSpecial ? "" : 'name="H'+i+'"'} id="H${i}" class="s" type="number" min="0" max="24" value="${hourVal}" ${isSpecial ? "disabled" : ""}>
@@ -152,7 +152,7 @@
 			<tr>
 				<td colspan="5">
 					<div id="WD${i}" style="display:none;background-color:#444;">
-						<hr>Run on weekdays
+						<hr>按星期运行
 						${weekdayTable}
 						${dateRange}
 						<hr>
@@ -190,7 +190,7 @@
 		}
 	}
 	function pMP() { // populateMacroPresets
-		var presetOpts = '<option value="0">Default Action (0)</option>' + sortedPresetOptions;
+		var presetOpts = "<option value=\"0\">默认操作（0）</option>" + sortedPresetOptions;
 		var fields = ['A0','A1','MC','MN'];
 		for (var f of fields) {
 			var inp = gN(f);
@@ -212,7 +212,7 @@
 		}
 	}
 	function rTOPO() { // refreshTimerPresetOptions
-		var presetOpts = '<option value="0">Delete Timer</option>' + sortedPresetOptions;
+		var presetOpts = "<option value=\"0\">删除定时器</option>" + sortedPresetOptions;
 		for (var i=0; i<timerCount; i++) {
 			var sel = gId("T"+i);
 			if (!sel) continue;
@@ -220,8 +220,8 @@
 		}
 	}
 	function bAO() { // buildAnalogOptions: analog functions + per-segment opacity (segment 0 included; MD=0 => segment 0)
-		var o = '<optgroup label="Analog Functions"><option value="250">Global brightness (250)</option><option value="249">Effect speed (249)</option><option value="248">Effect intensity (248)</option><option value="247">Palette (247)</option><option value="200">Primary color hue (200)</option></optgroup><optgroup label="Analog Segment Opacity">';
-		for (var j=0; j<=32; j++) o += `<option value="${j}">Segment ${j} opacity</option>`;
+		var o = "<optgroup label=\"模拟功能\"><option value=\"250\">全局亮度（250）</option><option value=\"249\">灯效速度（249）</option><option value=\"248\">灯效强度（248）</option><option value=\"247\">调色板（247）</option><option value=\"200\">主颜色色相（200）</option></optgroup><optgroup label=\"模拟分段不透明度\">";
+		for (var j=0; j<=32; j++) o += `<option value="${j}">分段 ${j} 不透明度</option>`;
 		o += '</optgroup>';
 		return o;
 	}
@@ -229,19 +229,19 @@
 	function isSwitchBtn(t) { return t==4 || t==5 || t==9; } // BTN_TYPE_SWITCH / BTN_TYPE_PIR_SENSOR / BTN_TYPE_TOUCH_SWITCH
 	function btnTypeName(t) { // mirrors the button type dropdown on the LED settings page
 		switch (+t) {
-			case 2: return 'Pushbutton';
-			case 3: return 'Push inverted';
-			case 4: return 'Switch';
-			case 5: return 'PIR sensor';
-			case 6: return 'Touch';
-			case 7: return 'Analog';
-			case 8: return 'Analog inverted';
-			case 9: return 'Touch (switch)';
-			default: return 'Disabled';
+			case 2: return "轻触按钮";
+			case 3: return "反向按钮";
+			case 4: return "开关";
+			case 5: return "人体红外传感器";
+			case 6: return "触摸";
+			case 7: return "模拟输入";
+			case 8: return "反向模拟输入";
+			case 9: return "触摸（开关）";
+			default: return "禁用";
 		}
 	}
 	function rBPO() { // refreshButtonPresetOptions
-		var presetOpts = '<option value="0">Default Action (0)</option>' + sortedPresetOptions;
+		var presetOpts = "<option value=\"0\">默认操作（0）</option>" + sortedPresetOptions;
 		var analogOpts = bAO();
 		var container = gId("macros");
 		if (!container) return;
@@ -274,7 +274,7 @@
 	function addRow(i,p,l,d,t) {
 		if (t===undefined) t = 0;
 		var b = String.fromCharCode((i<10?48:55)+i);
-		var presetOpts = '<option value="0">Default Action (0)</option>' + sortedPresetOptions;
+		var presetOpts = "<option value=\"0\">默认操作（0）</option>" + sortedPresetOptions;
 		var typeName = btnTypeName(t);
 		var buttonBlock = document.createElement('div');
 		buttonBlock.className = 'bb';
@@ -282,10 +282,10 @@
 		if (isAnalogBtn(t)) {
 			// analog buttons: MD holds the function/segment; short/long press are unused (firmware defaults missing MP/ML to 0)
 			buttonBlock.innerHTML = `
-				<div class="bh">Analog ${i} - ${typeName}</div>
+				<div class="bh">模拟输入 ${i} - ${typeName}</div>
 				<div class="bs">
 					<div class="ba">
-						<label>Analog function</label>
+						<label>模拟功能</label>
 						<select name="MD${b}" class="s" required>${bAO()}</select>
 					</div>
 				</div>
@@ -295,14 +295,14 @@
 		} else if (isSwitchBtn(t)) {
 			// switches: MP fires on On->Off, ML on Off->On; double press (MD) is unused (firmware defaults missing MD to 0)
 			buttonBlock.innerHTML = `
-				<div class="bh">Switch ${i} - ${typeName}</div>
+				<div class="bh">开关 ${i} - ${typeName}</div>
 				<div class="bs">
 					<div class="ba">
-						<label>On → Off</label>
+						<label>开 → 关</label>
 						<select name="MP${b}" class="s" required>${presetOpts}</select>
 					</div>
 					<div class="ba">
-						<label>Off → On</label>
+						<label>关 → 开</label>
 						<select name="ML${b}" class="s" required>${presetOpts}</select>
 					</div>
 				</div>
@@ -316,18 +316,18 @@
 		} else {
 			// pushbuttons: short (MP), long (ML) and double (MD) press
 			buttonBlock.innerHTML = `
-				<div class="bh">Button ${i} - ${typeName}</div>
+				<div class="bh">按钮 ${i} - ${typeName}</div>
 				<div class="bs">
 					<div class="ba">
-						<label>Short press</label>
+						<label>短按</label>
 						<select name="MP${b}" class="s" required>${presetOpts}</select>
 					</div>
 					<div class="ba">
-						<label>Long press</label>
+						<label>长按</label>
 						<select name="ML${b}" class="s" required>${presetOpts}</select>
 					</div>
 					<div class="ba">
-						<label>Double press</label>
+						<label>双击</label>
 						<select name="MD${b}" class="s" required>${presetOpts}</select>
 					</div>
 				</div>
@@ -365,14 +365,14 @@
 <form id="form_s" name="Sf" method="post" onsubmit="Wd()">
 	<div class="toprow">
 	<div class="helpB"><button type="button" onclick="H('features/settings/#time-settings')">?</button></div>
-	<button type="button" onclick="B()">Back</button><button type="submit">Save</button><hr>
+	<button type="button" onclick="B()">返回</button><button type="submit">保存</button><hr>
 	</div>
-	<h2>Time setup</h2>
+	<h2>时间设置</h2>
 	<div class="sec">
-		Get time from NTP server: <input type="checkbox" name="NT"><br>
+		从 NTP 服务器获取时间： <input type="checkbox" name="NT"><br>
 		<input type="text" name="NS" maxlength="32"><br>
-		Use 24h format: <input type="checkbox" name="CF"><br>
-		Time zone: 
+		使用 24 小时制： <input type="checkbox" name="CF"><br>
+		时区：
 		<select name="TZ">
 			<option value="0" selected>GMT(UTC)</option>
 			<option value="1">GMT/BST</option>
@@ -383,73 +383,73 @@
 			<option value="6">US-MST/MDT</option>
 			<option value="7">US-AZ</option>
 			<option value="8">US-PST/PDT</option>
-			<option value="9">CST (AWST, PHST)</option>
+			<option value="9">中国标准时间（UTC+8）</option>
 			<option value="10">JST (KST)</option>
 			<option value="11">AEST/AEDT</option>
 			<option value="12">NZST/NZDT</option>
-			<option value="13">North Korea</option>
-			<option value="14">IST (India)</option>
-			<option value="15">CA-Saskatchewan</option>
+			<option value="13">朝鲜</option>
+			<option value="14">印度（IST）</option>
+			<option value="15">加拿大萨斯喀彻温省</option>
 			<option value="16">ACST</option>
 			<option value="17">ACST/ACDT</option>
-			<option value="18">HST (Hawaii)</option>
-			<option value="19">NOVT (Novosibirsk)</option>
-			<option value="20">AKST/AKDT (Anchorage)</option>
+			<option value="18">夏威夷（HST）</option>
+			<option value="19">新西伯利亚（NOVT）</option>
+			<option value="20">安克雷奇（AKST/AKDT）</option>
 			<option value="21">MX-CST</option>
-			<option value="22">PKT (Pakistan)</option>
-			<option value="23">BRT (Brasília)</option>
-			<option value="24">AWST (Perth)</option>
+			<option value="22">巴基斯坦（PKT）</option>
+			<option value="23">巴西利亚（BRT）</option>
+			<option value="24">珀斯（AWST）</option>
 		</select><br>
-		UTC offset: <input name="UO" type="number" min="-65500" max="65500" required> seconds (max. 18 hours)<br>
-		Current local time is <span class="times">unknown</span>.<br>
-		Latitude: <select name="LTR"><option value="N">N</option><option value="S">S</option></select><input name="LT" type="number" class="xl" min="0" max="66.6" step="0.01"><br>
-		Longitude: <select name="LNR"><option value="E">E</option><option value="W">W</option></select><input name="LN" type="number" class="xl" min="0" max="180" step="0.01"><br>
-		<button type="button" id="locbtn" onclick="getLatLon()">Get location</button>
-		<div><i>(opens new tab, only works in browser)</i></div>
+		UTC 偏移： <input name="UO" type="number" min="-65500" max="65500" required> 秒（最多 18 小时）<br>
+		当前本地时间为 <span class="times">未知</span>.<br>
+		纬度： <select name="LTR"><option value="N">N</option><option value="S">S</option></select><input name="LT" type="number" class="xl" min="0" max="66.6" step="0.01"><br>
+		经度： <select name="LNR"><option value="E">E</option><option value="W">W</option></select><input name="LN" type="number" class="xl" min="0" max="180" step="0.01"><br>
+		<button type="button" id="locbtn" onclick="getLatLon()">获取位置</button>
+		<div><i>（打开新标签页，仅适用于浏览器）</i></div>
 		<div id="sun" class="times"></div>
 	</div>
 	<div class="sec">
-		<h3>Clock</h3>
-		Analog Clock overlay: <input type="checkbox" name="OL" onchange="Cs()"><br>
+		<h3>时钟</h3>
+		模拟时钟叠加： <input type="checkbox" name="OL" onchange="Cs()"><br>
 		<div id="cac">
-			First LED: <input name="O1" type="number" min="0" max="1024" required> Last LED: <input name="O2" type="number" min="0" max="1024" required><br>
-			12h LED: <input name="OM" type="number" min="0" max="1024" required><br>
-			Show 5min marks: <input type="checkbox" name="O5"><br>
-			Seconds (as trail): <input type="checkbox" name="OS"><br>
-			Show clock overlay only if all LEDs are solid black: <input type="checkbox" name="OB"><br>
+			起始 LED： <input name="O1" type="number" min="0" max="1024" required> 结束 LED： <input name="O2" type="number" min="0" max="1024" required><br>
+			12 点位置 LED： <input name="OM" type="number" min="0" max="1024" required><br>
+			显示 5 分钟刻度： <input type="checkbox" name="O5"><br>
+			秒针（拖尾）： <input type="checkbox" name="OS"><br>
+			仅当所有 LED 为纯黑时显示时钟叠加： <input type="checkbox" name="OB"><br>
 		</div>
-		Countdown Mode: <input type="checkbox" name="CE"><br>
-		Countdown Goal:<br>
-		Date:&nbsp;<nowrap>20<input name="CY" class="xs" type="number" min="0" max="99" required>-<input name="CI" class="xs" type="number" min="1" max="12" required>-<input name="CD" class="xs" type="number" min="1" max="31" required></nowrap><br>
-		Time:&nbsp;<nowrap><input name="CH" class="xs" type="number" min="0" max="23" required>:<input name="CM" class="xs" type="number" min="0" max="59" required>:<input name="CS" class="xs" type="number" min="0" max="59" required></nowrap><br>
+		倒计时模式： <input type="checkbox" name="CE"><br>
+		倒计时目标：<br>
+		日期：&nbsp;<nowrap>20<input name="CY" class="xs" type="number" min="0" max="99" required>-<input name="CI" class="xs" type="number" min="1" max="12" required>-<input name="CD" class="xs" type="number" min="1" max="31" required></nowrap><br>
+		时间：&nbsp;<nowrap><input name="CH" class="xs" type="number" min="0" max="23" required>:<input name="CM" class="xs" type="number" min="0" max="59" required>:<input name="CS" class="xs" type="number" min="0" max="59" required></nowrap><br>
 	</div>
 	<hr>
-	<h2>Macro Presets</h2>
-	<i>Presets can be used as macros for both JSON and HTTP API commands.<br>
-	Enter the preset ID below.</i>
-	<i>Use 0 for the default action instead of a preset</i><br>
+	<h2>宏预设</h2>
+	<i>预设可作为宏，用于执行 JSON 和 HTTP API 命令。<br>
+	请在下方输入预设 ID。</i>
+	<i>输入 0 则使用默认操作，不调用预设</i><br>
 	<a href="https://kno.wled.ge/interfaces/json-api/" target="_blank">JSON API</a><br>
 	<a href="https://kno.wled.ge/interfaces/http-api/" target="_blank">HTTP API</a><br>
 	<div class="sec">
-		<h3>Timer & Alexa Presets</h3>
-		Countdown-Over Preset: <input name="MC" class="m" type="number" min="0" max="250" required><br>
-		Timed-Light-Over Presets: <input name="MN" class="m" type="number" min="0" max="250" required><br>
-		Alexa On/Off Preset: <input name="A0" class="m" type="number" min="0" max="250" required> <input name="A1" class="m" type="number" min="0" max="250" required><br>
+		<h3>定时器 & Alexa 预设</h3>
+		倒计时结束预设： <input name="MC" class="m" type="number" min="0" max="250" required><br>
+		定时灯光结束预设： <input name="MN" class="m" type="number" min="0" max="250" required><br>
+		Alexa 开／关预设： <input name="A0" class="m" type="number" min="0" max="250" required> <input name="A1" class="m" type="number" min="0" max="250" required><br>
 	</div>
 	<div class="sec">
-		<h3>Button Action Presets</h3>
+		<h3>按钮操作预设</h3>
 		<div id="macros"></div>
-		<a href="https://kno.wled.ge/features/macros/#analog-button" target="_blank">Analog Button setup</a>
+		<a href="https://kno.wled.ge/features/macros/#analog-button" target="_blank">模拟按钮设置</a>
 	</div>
 	<div class="sec">
-		<h3>Time-Controlled Presets</h3>
+		<h3>定时预设</h3>
 		<div style="display: inline-block">
 			<table id="TMT" style="min-width:330px;"></table>
-			<button type="button" onclick="addTimerRow()">Add Timer</button>
+			<button type="button" onclick="addTimerRow()">添加定时器</button>
 		</div>
 	</div>
 	<hr>
-	<button type="button" onclick="B()">Back</button><button type="submit">Save</button>
+	<button type="button" onclick="B()">返回</button><button type="submit">保存</button>
 </form>
 </body>
 </html>

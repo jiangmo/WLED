@@ -307,7 +307,7 @@ void getSettingsJS(byte subPage, Print& settingsScript)
       printSetClassElementHTML(settingsScript,PSTR("sip"),0,s);
     } else
     {
-      printSetClassElementHTML(settingsScript,PSTR("sip"),0,(char*)F("Not connected"));
+      printSetClassElementHTML(settingsScript,PSTR("sip"),0,(char*)F("未连接"));
     }
 
     if (WiFi.softAPIP()[0] != 0) //is active
@@ -318,7 +318,7 @@ void getSettingsJS(byte subPage, Print& settingsScript)
       printSetClassElementHTML(settingsScript,PSTR("sip"),1,s);
     } else
     {
-      printSetClassElementHTML(settingsScript,PSTR("sip"),1,(char*)F("Not active"));
+      printSetClassElementHTML(settingsScript,PSTR("sip"),1,(char*)F("未启用"));
     }
 
     #ifndef WLED_DISABLE_ESPNOW
@@ -565,17 +565,17 @@ void getSettingsJS(byte subPage, Print& settingsScript)
     printSetFormCheckbox(settingsScript,PSTR("HO"),hueApplyOnOff);
     printSetFormCheckbox(settingsScript,PSTR("HB"),hueApplyBri);
     printSetFormCheckbox(settingsScript,PSTR("HC"),hueApplyColor);
-    char hueErrorString[25];
+    char hueErrorString[96];
     switch (hueError)
     {
-      case HUE_ERROR_INACTIVE     : strcpy_P(hueErrorString,PSTR("Inactive"));                break;
-      case HUE_ERROR_ACTIVE       : strcpy_P(hueErrorString,PSTR("Active"));                  break;
-      case HUE_ERROR_UNAUTHORIZED : strcpy_P(hueErrorString,PSTR("Unauthorized"));            break;
-      case HUE_ERROR_LIGHTID      : strcpy_P(hueErrorString,PSTR("Invalid light ID"));        break;
-      case HUE_ERROR_PUSHLINK     : strcpy_P(hueErrorString,PSTR("Link button not pressed")); break;
-      case HUE_ERROR_JSON_PARSING : strcpy_P(hueErrorString,PSTR("JSON parsing error"));      break;
-      case HUE_ERROR_TIMEOUT      : strcpy_P(hueErrorString,PSTR("Timeout"));                 break;
-      default: sprintf_P(hueErrorString,PSTR("Bridge Error %i"),hueError);
+      case HUE_ERROR_INACTIVE     : strcpy_P(hueErrorString,PSTR("未启用"));                break;
+      case HUE_ERROR_ACTIVE       : strcpy_P(hueErrorString,PSTR("已启用"));                  break;
+      case HUE_ERROR_UNAUTHORIZED : strcpy_P(hueErrorString,PSTR("未授权"));            break;
+      case HUE_ERROR_LIGHTID      : strcpy_P(hueErrorString,PSTR("灯具 ID 无效"));        break;
+      case HUE_ERROR_PUSHLINK     : strcpy_P(hueErrorString,PSTR("未按连接按钮")); break;
+      case HUE_ERROR_JSON_PARSING : strcpy_P(hueErrorString,PSTR("JSON 解析错误"));      break;
+      case HUE_ERROR_TIMEOUT      : strcpy_P(hueErrorString,PSTR("超时"));                 break;
+      default: sprintf_P(hueErrorString,PSTR("桥接器错误 %i"),hueError);
     }
 
     printSetClassElementHTML(settingsScript,PSTR("sip"),0,hueErrorString);
@@ -595,7 +595,7 @@ void getSettingsJS(byte subPage, Print& settingsScript)
     printSetFormCheckbox(settingsScript,PSTR("CF"),!useAMPM);
     printSetFormIndex(settingsScript,PSTR("TZ"),currentTimezone);
     printSetFormValue(settingsScript,PSTR("UO"),utcOffsetSecs);
-    char tm[32];
+    char tm[80]; // Allow space for UTF-8 sunrise/sunset labels.
     dtostrf(longitude,4,2,tm);
     printSetFormValue(settingsScript,PSTR("LN"),tm);
     dtostrf(latitude,4,2,tm);
@@ -603,7 +603,7 @@ void getSettingsJS(byte subPage, Print& settingsScript)
     getTimeString(tm);
     printSetClassElementHTML(settingsScript,PSTR("times"),0,tm);
     if ((int)(longitude*10.0f) || (int)(latitude*10.0f)) {
-      sprintf_P(tm, PSTR("Sunrise: %02d:%02d Sunset: %02d:%02d"), hour(sunrise), minute(sunrise), hour(sunset), minute(sunset));
+      sprintf_P(tm, PSTR("日出：%02d:%02d 日落：%02d:%02d"), hour(sunrise), minute(sunrise), hour(sunset), minute(sunset));
       printSetClassElementHTML(settingsScript,PSTR("times"),1,tm);
     }
     printSetFormCheckbox(settingsScript,PSTR("OL"),overlayCurrent);

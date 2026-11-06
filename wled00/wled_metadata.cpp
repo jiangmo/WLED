@@ -154,7 +154,7 @@ bool shouldAllowOTA(const wled_metadata_t& firmwareDescription, char* errorMessa
   
   if (normalizeReleaseName(uploadedRelease) != normalizeReleaseName(releaseString)) {
     if (errorMessage && errorMessageLen > 0) {
-      snprintf_P(errorMessage, errorMessageLen, PSTR("Firmware release name mismatch: current='%s', uploaded='%s'."),
+      snprintf_P(errorMessage, errorMessageLen, PSTR("固件型号不匹配：当前='%s'，上传='%s'。"),
                 releaseString, uploadedRelease.c_str());
       errorMessage[errorMessageLen - 1] = '\0'; // Ensure null termination
     }
@@ -176,7 +176,7 @@ bool shouldAllowOTA(const wled_metadata_t& firmwareDescription, char* errorMessa
 
       if (firmwareDescription.safe_update_version[v_index] > our_v_parsed) {
         if (errorMessage && errorMessageLen > 0) {
-          snprintf_P(errorMessage, errorMessageLen, PSTR("Cannot update from this version: requires at least %d.%d.%d, current='%s'."), 
+          snprintf_P(errorMessage, errorMessageLen, PSTR("无法升级：最低要求 %d.%d.%d，当前='%s'。"),
                   firmwareDescription.safe_update_version[0], firmwareDescription.safe_update_version[1], firmwareDescription.safe_update_version[2],
                   versionString);
           errorMessage[errorMessageLen - 1] = '\0'; // Ensure null termination

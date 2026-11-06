@@ -27,12 +27,12 @@ function gen(){
       imcn.style.display = "block";
       bcn.style.display = "";
     } else {
-      let imageInfo = '<p><b>WARNING!</b> File does not appear to be a valid image</p>';
+      let imageInfo = "<p><b>警告！</b> 此文件似乎不是有效的图片</p>";
       imin.innerHTML = imageInfo;
       imin.style.display = "block";
       imcn.style.display = "none";
       JLD.value = '';
-      if (devMode) console.log("The string '" + base64Image + "' is not a valid base64 image.");
+      if (devMode) console.log("字符串“" + base64Image + "”不是有效的 Base64 图片。");
     }
   }
   
@@ -90,7 +90,7 @@ tSg.addEventListener("change", () => {
 
 gId("sendJSONledbutton").addEventListener('click', async () => {
   if (window.location.protocol === "https:") {
-    alert('Will only be available when served over http (or WLED is run over https)');
+    alert("仅在使用 HTTP 访问页面（或 WLED 支持 HTTPS）时可用");
   } else {
     postPixels();
   }
@@ -336,7 +336,7 @@ function generateSegmentArray(noOfSegments) {
   for (var i = 0; i < noOfSegments; i++) {
     arr.push({
       value: i,
-      text: "Segment index " + i
+      text: "分段索引 " + i
     });
   }
   return arr;
@@ -352,9 +352,9 @@ seDiv.innerHTML =
 '<svg style="width:36px;height:36px" viewBox="0 0 24 24"><path fill="currentColor" d="M12,6V9L16,5L12,1V4A8,8 0 0,0 4,12C4,13.57 4.46,15.03 5.24,16.26L6.7,14.8C6.25,13.97 6,13 6,12A6,6 0 0,1 12,6M18.76,7.74L17.3,9.2C17.74,10.04 18,11 18,12A6,6 0 0,1 12,18V15L8,19L12,23V20A8,8 0 0,0 20,12C20,10.43 19.54,8.97 18.76,7.74Z" /> </svg>&nbsp; Convert to WLED JSON '; 
 */
 cjb.innerHTML = 
-'<svg class="svg-icon" style="width:36px;height:36px" viewBox="0 0 24 24"> <path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" /> </svg>&nbsp; Copy to clipboard'; 
+"<svg class=\"svg-icon\" style=\"width:36px;height:36px\" viewBox=\"0 0 24 24\"> <path fill=\"currentColor\" d=\"M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z\" /> </svg>&nbsp; 复制到剪贴板";
 gId("sendJSONledbutton").innerHTML = 
-'<svg class="svg-icon" style="width:36px;height:36px" viewBox="0 0 24 24"> <path id=sendSvgP fill="currentColor" d="M6.5 20Q4.22 20 2.61 18.43 1 16.85 1 14.58 1 12.63 2.17 11.1 3.35 9.57 5.25 9.15 5.88 6.85 7.75 5.43 9.63 4 12 4 14.93 4 16.96 6.04 19 8.07 19 11 20.73 11.2 21.86 12.5 23 13.78 23 15.5 23 17.38 21.69 18.69 20.38 20 18.5 20H13Q12.18 20 11.59 19.41 11 18.83 11 18V12.85L9.4 14.4L8 13L12 9L16 13L14.6 14.4L13 12.85V18H18.5Q19.55 18 20.27 17.27 21 16.55 21 15.5 21 14.45 20.27 13.73 19.55 13 18.5 13H17V11Q17 8.93 15.54 7.46 14.08 6 12 6 9.93 6 8.46 7.46 7 8.93 7 11H6.5Q5.05 11 4.03 12.03 3 13.05 3 14.5 3 15.95 4.03 17 5.05 18 6.5 18H9V20M12 13Z" /> </svg>&nbsp; Send to device';
+"<svg class=\"svg-icon\" style=\"width:36px;height:36px\" viewBox=\"0 0 24 24\"> <path id=sendSvgP fill=\"currentColor\" d=\"M6.5 20Q4.22 20 2.61 18.43 1 16.85 1 14.58 1 12.63 2.17 11.1 3.35 9.57 5.25 9.15 5.88 6.85 7.75 5.43 9.63 4 12 4 14.93 4 16.96 6.04 19 8.07 19 11 20.73 11.2 21.86 12.5 23 13.78 23 15.5 23 17.38 21.69 18.69 20.38 20 18.5 20H13Q12.18 20 11.59 19.41 11 18.83 11 18V12.85L9.4 14.4L8 13L12 9L16 13L14.6 14.4L13 12.85V18H18.5Q19.55 18 20.27 17.27 21 16.55 21 15.5 21 14.45 20.27 13.73 19.55 13 18.5 13H17V11Q17 8.93 15.54 7.46 14.08 6 12 6 9.93 6 8.46 7.46 7 8.93 7 11H6.5Q5.05 11 4.03 12.03 3 13.05 3 14.5 3 15.95 4.03 17 5.05 18 6.5 18H9V20M12 13Z\" /> </svg>&nbsp; 发送至设备";
 
 //After everything is loaded, check if we have a possible IP/host
 

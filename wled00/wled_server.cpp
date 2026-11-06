@@ -25,14 +25,14 @@ static void createEditHandler();
 
 
 // define flash strings once (saves flash memory)
-static const char s_redirecting[] PROGMEM = "Redirecting...";
+static const char s_redirecting[] PROGMEM = "正在跳转……";
 static const char s_content_enc[] PROGMEM = "Content-Encoding";
-static const char s_unlock_ota [] PROGMEM = "Please unlock OTA in security settings!";
-static const char s_unlock_cfg [] PROGMEM = "Please unlock settings using PIN code!";
-static const char s_rebooting  [] PROGMEM = "Rebooting now...";
-static const char s_notimplemented[] PROGMEM = "Not implemented";
-static const char s_accessdenied[]   PROGMEM = "Access Denied";
-static const char s_not_found[]      PROGMEM = "Not found";
+static const char s_unlock_ota [] PROGMEM = "请在安全设置中解除 OTA 锁定！";
+static const char s_unlock_cfg [] PROGMEM = "请使用 PIN 码解锁设置！";
+static const char s_rebooting  [] PROGMEM = "正在重启……";
+static const char s_notimplemented[] PROGMEM = "未实现";
+static const char s_accessdenied[]   PROGMEM = "拒绝访问";
+static const char s_not_found[]      PROGMEM = "未找到";
 static const char s_wsec[]           PROGMEM = "wsec.json";
 static const char s_func[]           PROGMEM = "func";
 static const char s_list[]           PROGMEM = "list";
@@ -182,10 +182,10 @@ static String msgProcessor(const String& var)
       messageBody += F(")</script>");
     } else if (optt == 253)
     {
-      messageBody += F("<br><br><form action=/settings><button class=\"bt\" type=submit>Back</button></form>"); //button to settings
+      messageBody += F("<br><br><form action=/settings><button class=\"bt\" type=submit>返回</button></form>"); //button to settings
     } else if (optt == 254)
     {
-      messageBody += F("<br><br><button type=\"button\" class=\"bt\" onclick=\"B()\">Back</button>");
+      messageBody += F("<br><br><button type=\"button\" class=\"bt\" onclick=\"B()\">返回</button>");
     }
     return messageBody;
   }
@@ -215,10 +215,10 @@ static void handleUpload(AsyncWebServerRequest *request, const String& filename,
     request->_tempFile.close();
     if (filename.indexOf(F("cfg.json")) >= 0) { // check for filename with or without slash
       doReboot = true;
-      request->send(200, FPSTR(CONTENT_TYPE_PLAIN), F("Config restore ok.\nRebooting..."));
+      request->send(200, FPSTR(CONTENT_TYPE_PLAIN), F("配置恢复成功。\n正在重启……"));
     } else {
       if (filename.indexOf(F("palette")) >= 0 && filename.indexOf(F(".json")) >= 0) loadCustomPalettes();
-      request->send(200, FPSTR(CONTENT_TYPE_PLAIN), F("File Uploaded!"));
+      request->send(200, FPSTR(CONTENT_TYPE_PLAIN), F("文件已上传！"));
     }
     cacheInvalidate++;
     updateFSInfo(); // refresh memory usage info
@@ -278,7 +278,7 @@ static void createEditHandler() {
     String path = request->arg(FPSTR(s_path)); // remaining functions expect a path
 
     if (path.length() == 0) {
-      request->send(400, FPSTR(CONTENT_TYPE_PLAIN), F("Missing path"));
+      request->send(400, FPSTR(CONTENT_TYPE_PLAIN), F("缺少路径"));
       return;
     }
 
@@ -308,15 +308,15 @@ static void createEditHandler() {
 
     if (func == "delete") {
       if (!WLED_FS.remove(path))
-        request->send(500, FPSTR(CONTENT_TYPE_PLAIN), F("Delete failed"));
+        request->send(500, FPSTR(CONTENT_TYPE_PLAIN), F("删除失败"));
       else
-        request->send(200, FPSTR(CONTENT_TYPE_PLAIN), F("File deleted"));
+        request->send(200, FPSTR(CONTENT_TYPE_PLAIN), F("文件已删除"));
       updateFSInfo(); // refresh memory usage info
       return;
     }
 
     // unrecognized func
-    request->send(400, FPSTR(CONTENT_TYPE_PLAIN), F("Invalid function"));
+    request->send(400, FPSTR(CONTENT_TYPE_PLAIN), F("无效的操作"));
   });
 }
 
@@ -394,7 +394,7 @@ void initServer()
   });
 
   server.on(F("/reset"), HTTP_GET, [](AsyncWebServerRequest *request){
-    serveMessage(request, 200, FPSTR(s_rebooting), F("Please wait ~10 seconds."), 131);
+    serveMessage(request, 200, FPSTR(s_rebooting), F("请等待约 10 秒。"), 131);
     doReboot = true;
   });
 
@@ -483,7 +483,7 @@ void initServer()
 #endif
 
   server.on(F("/teapot"), HTTP_GET, [](AsyncWebServerRequest *request){
-    serveMessage(request, 418, F("418. I'm a teapot."), F("(Tangible Embedded Advanced Project Of Twinkling)"), 254);
+    serveMessage(request, 418, F("418：我是一把茶壶。"), F("（实体嵌入式高级闪烁项目）"), 254);
   });
 
   server.on(F("/upload"), HTTP_POST, [](AsyncWebServerRequest *request) {},
@@ -510,14 +510,14 @@ void initServer()
         request->deferResponse();
       } else if (ota_result.first == OTAResultStatus::Ready) {
         if (ota_result.second.length() > 0) {
-          serveMessage(request, 500, F("Update failed!"), ota_result.second, 254);
+          serveMessage(request, 500, F("更新失败！"), ota_result.second, 254);
         } else {
-          serveMessage(request, 200, F("Update successful!"), FPSTR(s_rebooting), 131);
+          serveMessage(request, 200, F("更新成功！"), FPSTR(s_rebooting), 131);
         }
       }
     } else {
       // No context structure - something's gone horribly wrong
-      serveMessage(request, 500, F("Update failed!"), F("Internal server fault"), 254);
+      serveMessage(request, 500, F("更新失败！"), F("服务器内部错误"), 254);
     }
   },[](AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool isFinal){
     if (index == 0) { 
@@ -530,7 +530,7 @@ void initServer()
       IPAddress client  = request->client()->remoteIP();
       if (((otaSameSubnet && !inSameSubnet(client)) && !strlen(settingsPIN)) || (!otaSameSubnet && !inLocalSubnet(client))) {        
         DEBUG_PRINTLN(F("Attempted OTA update from different/non-local subnet!"));
-        serveMessage(request, 401, FPSTR(s_accessdenied), F("Client is not on local subnet."), 254);
+        serveMessage(request, 401, FPSTR(s_accessdenied), F("客户端不在本地子网中。"), 254);
         setOTAReplied(request);
         return;
       }
@@ -550,7 +550,7 @@ void initServer()
   });
 #else
   const auto notSupported = [](AsyncWebServerRequest *request){
-    serveMessage(request, 501, FPSTR(s_notimplemented), F("This build does not support OTA update."), 254);
+    serveMessage(request, 501, FPSTR(s_notimplemented), F("此固件不支持 OTA 更新。"), 254);
   };
   server.on(_update, HTTP_GET, notSupported);
   server.on(_update, HTTP_POST, notSupported, [](AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool isFinal){});
@@ -563,14 +563,14 @@ void initServer()
       auto bootloader_result = getBootloaderOTAResult(request);
       if (bootloader_result.first) {
         if (bootloader_result.second.length() > 0) {
-          serveMessage(request, 500, F("Bootloader update failed!"), bootloader_result.second, 254);
+          serveMessage(request, 500, F("引导程序更新失败！"), bootloader_result.second, 254);
         } else {
-          serveMessage(request, 200, F("Bootloader updated successfully!"), FPSTR(s_rebooting), 131);
+          serveMessage(request, 200, F("引导程序更新成功！"), FPSTR(s_rebooting), 131);
         }
       }
     } else {
       // No context structure - something's gone horribly wrong
-      serveMessage(request, 500, F("Bootloader update failed!"), F("Internal server fault"), 254);
+      serveMessage(request, 500, F("引导程序更新失败！"), F("服务器内部错误"), 254);
     }
   },[](AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool isFinal){
     if (index == 0) {
@@ -578,7 +578,7 @@ void initServer()
       IPAddress client = request->client()->remoteIP();
       if (((otaSameSubnet && !inSameSubnet(client)) && !strlen(settingsPIN)) || (!otaSameSubnet && !inLocalSubnet(client))) {
         DEBUG_PRINTLN(F("Attempted bootloader update from different/non-local subnet!"));
-        serveMessage(request, 401, FPSTR(s_accessdenied), F("Client is not on local subnet."), 254);
+        serveMessage(request, 401, FPSTR(s_accessdenied), F("客户端不在本地子网中。"), 254);
         setBootloaderOTAReplied(request);
         return;
       }
@@ -712,11 +712,11 @@ void serveSettingsJS(AsyncWebServerRequest* request)
   }
   byte subPage = request->arg(F("p")).toInt();
   if (subPage > SUBPAGE_LAST) {
-    request->send_P(501, FPSTR(CONTENT_TYPE_JAVASCRIPT), PSTR("alert('Settings for this request are not implemented.');"));
+    request->send_P(501, FPSTR(CONTENT_TYPE_JAVASCRIPT), PSTR("alert('此请求的设置尚未实现。');"));
     return;
   }
   if (subPage > 0 && !correctPIN && strlen(settingsPIN)>0) {
-    request->send_P(401, FPSTR(CONTENT_TYPE_JAVASCRIPT), PSTR("alert('PIN incorrect.');"));
+    request->send_P(401, FPSTR(CONTENT_TYPE_JAVASCRIPT), PSTR("alert('PIN 码不正确。');"));
     return;
   }
   
@@ -778,27 +778,27 @@ void serveSettings(AsyncWebServerRequest* request, bool post) {
     }
     if (subPage != SUBPAGE_WIFI || !(wifiLock && otaLock)) handleSettingsSet(request, subPage);
 
-    char s[32];
-    char s2[45] = "";
+    char s[96]; // UTF-8 Chinese messages need up to three bytes per character.
+    char s2[128] = "";
 
     switch (subPage) {
-      case SUBPAGE_WIFI   : strcpy_P(s, PSTR("WiFi")); strcpy_P(s2, PSTR("Please connect to the new IP (if changed)")); break;
+      case SUBPAGE_WIFI   : strcpy_P(s, PSTR("WiFi")); strcpy_P(s2, PSTR("如果 IP 已更改，请连接新 IP。")); break;
       case SUBPAGE_LEDS   : strcpy_P(s, PSTR("LED")); break;
-      case SUBPAGE_UI     : strcpy_P(s, PSTR("UI")); break;
-      case SUBPAGE_SYNC   : strcpy_P(s, PSTR("Sync")); break;
-      case SUBPAGE_TIME   : strcpy_P(s, PSTR("Time")); break;
-      case SUBPAGE_SEC    : strcpy_P(s, PSTR("Security")); if (doReboot) strcpy_P(s2, PSTR("Rebooting, please wait ~10 seconds...")); break;
+      case SUBPAGE_UI     : strcpy_P(s, PSTR("界面")); break;
+      case SUBPAGE_SYNC   : strcpy_P(s, PSTR("同步")); break;
+      case SUBPAGE_TIME   : strcpy_P(s, PSTR("时间")); break;
+      case SUBPAGE_SEC    : strcpy_P(s, PSTR("安全")); if (doReboot) strcpy_P(s2, PSTR("正在重启，请等待约 10 秒……")); break;
 #ifdef WLED_ENABLE_DMX
       case SUBPAGE_DMX    : strcpy_P(s, PSTR("DMX")); break;
 #endif
-      case SUBPAGE_UM     : strcpy_P(s, PSTR("Usermods")); break;
+      case SUBPAGE_UM     : strcpy_P(s, PSTR("用户模块")); break;
 #ifndef WLED_DISABLE_2D
-      case SUBPAGE_2D     : strcpy_P(s, PSTR("2D")); break;
+      case SUBPAGE_2D     : strcpy_P(s, PSTR("二维")); break;
 #endif
-      case SUBPAGE_PINREQ : strcpy_P(s, correctPIN ? PSTR("PIN accepted") : PSTR("PIN rejected")); break;
+      case SUBPAGE_PINREQ : strcpy_P(s, correctPIN ? PSTR("PIN 验证通过") : PSTR("PIN 验证失败")); break;
     }
 
-    if (subPage != SUBPAGE_PINREQ) strcat_P(s, PSTR(" settings saved."));
+    if (subPage != SUBPAGE_PINREQ) strcat_P(s, PSTR("设置已保存。"));
 
     if (subPage == SUBPAGE_PINREQ && correctPIN) {
       subPage = originalSubPage; // on correct PIN load settings page the user intended
@@ -833,9 +833,9 @@ void serveSettings(AsyncWebServerRequest* request, bool post) {
       if (request->hasArg(F("revert")) && inLocalSubnet(request->client()->remoteIP()) && Update.canRollBack()) {
         doReboot = Update.rollBack();
         if (doReboot) {
-          serveMessage(request, 200, F("Reverted to previous version!"), FPSTR(s_rebooting), 133);
+          serveMessage(request, 200, F("已回退至上一版本！"), FPSTR(s_rebooting), 133);
         } else {
-          serveMessage(request, 500, F("Rollback failed!"), F("Please reboot and retry."), 254);
+          serveMessage(request, 500, F("回退失败！"), F("请重启后重试。"), 254);
         }
         return;
       }
@@ -848,7 +848,7 @@ void serveSettings(AsyncWebServerRequest* request, bool post) {
     case SUBPAGE_PINS    :  content = PAGE_settings_pininfo; len = PAGE_settings_pininfo_length; break;
     case SUBPAGE_LOCK    : {
       correctPIN = !strlen(settingsPIN); // lock if a pin is set
-      serveMessage(request, 200, strlen(settingsPIN) > 0 ? PSTR("Settings locked") : PSTR("No PIN set"), FPSTR(s_redirecting), 1);
+      serveMessage(request, 200, strlen(settingsPIN) > 0 ? PSTR("设置已锁定") : PSTR("未设置 PIN 码"), FPSTR(s_redirecting), 1);
       return;
     }
     case SUBPAGE_PINREQ  :  content = PAGE_settings_pin;  len = PAGE_settings_pin_length; code = 401;                 break;

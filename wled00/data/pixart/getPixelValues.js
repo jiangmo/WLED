@@ -84,7 +84,7 @@ function getPixelRGBValues(base64Image) {
     canvas.width = sizeX;
     canvas.height = sizeY;
 
-    imageInfo = '<p>Width: ' + sizeX + ', Height: ' + sizeY + ' (make sure this matches your led matrix setup)</p>'
+    imageInfo = "<p>宽度： " + sizeX + ', Height: ' + sizeY + " （请确保与 LED 矩阵配置一致）</p>"
 
     // Draw the image onto the canvas
     context.drawImage(image, 0, 0, sizeX, sizeY);
@@ -299,7 +299,7 @@ function getPixelRGBValues(base64Image) {
     } else if (formatSelection == 'ha'){
       JLD.value = haString;
     } else {
-      JLD.value = 'ERROR!/n' + formatSelection + ' is an unknown format.'
+      JLD.value = 'ERROR!/n' + formatSelection + ' 是未知格式。'
     }
     
     fileJSON += ']}}';
@@ -307,7 +307,7 @@ function getPixelRGBValues(base64Image) {
     let infoDiv = imin;
     let canvasDiv = imin;
     if (hasTransparency){
-      imageInfo = imageInfo + '<p><b>WARNING!</b> Transparency info detected in image. Transparency (alpha) has been ignored. To ensure you get the result you desire, use only solid colors in your image.</p>'
+      imageInfo = imageInfo + "<p><b>警告！</b> 检测到图片包含透明信息，已忽略透明度（Alpha）。为获得预期效果，请使用不透明颜色的图片。</p>"
     }
     
     infoDiv.innerHTML = imageInfo;

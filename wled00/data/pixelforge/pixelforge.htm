@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -246,63 +246,63 @@ button, .btn {
 	<div class="title">WLED<span class="sh">PixelForge</span></div>
 
 	<div class="tb">
-		<button class="active" id="tImg">Image Tool</button>
-		<button id="tTxt">Scrolling Text</button>
-		<button id="tOth">Other Tools</button>
+		<button class="active" id="tImg">图片工具</button>
+		<button id="tTxt">滚动文字</button>
+		<button id="tOth">其他工具</button>
 	</div>
 
 	<div id="iTab" class="tabc active">
-		<h3 style="margin-top:20px;">Target Segment</h3>
+		<h3 style="margin-top:20px;">目标分段</h3>
 		<select id="seg"></select>
 
-		<h3>Images on Device</h3>
+		<h3>设备上的图片</h3>
 		<div class="g" id="gr"></div>
 
-		<h3>Upload New Image</h3>
+		<h3>上传新图片</h3>
 		<div id="drop" class="dp">
-			<p>Drop image or click to select</p>
+			<p>拖放图片或点击选择</p>
 		</div>
 		<input type="file" id="src" accept="image/*" style="display:none">
 
 		<div class="ed" id="ed">
-			<h3 style="margin-top:0;padding-top:0;border-top:0">Crop & Adjust Image</h3>
+			<h3 style="margin-top:0;padding-top:0;border-top:0">裁剪 & 调整图片</h3>
 
 			<div class="crw">
-				<button class="sml" id="matchAspect">Match Aspect Ratio</button>
-				<button class="sml" id="matchSize">Match Size (1:1)</button>
-				<button class="sml" id="fullSize">Full Size</button>
-				<button class="sml" id="resetCrop">Reset</button>
+				<button class="sml" id="matchAspect">匹配宽高比</button>
+				<button class="sml" id="matchSize">匹配尺寸（1:1）</button>
+				<button class="sml" id="fullSize">原始尺寸</button>
+				<button class="sml" id="resetCrop">重置</button>
 			</div>
 
 			<div class="cw">
 				<div style="width:100%">
 					<div class="slc">
-						<label>Rotation:  <span id="rotVal">0</span>° <input type="checkbox" id="snap">snap</label>
+						<label>旋转：  <span id="rotVal">0</span>° <input type="checkbox" id="snap">吸附</label>
 						<input type="range" id="rotSl" min="0" max="359" value="0" class="sl">
 					</div>
 					<div class="slc">
-						<label>Zoom: </label>
+						<label>缩放： </label>
 						<input type="range" id="zoom" min="0" max="100" value="0" class="sl">
 					</div>
 					<canvas id="cv" width="500" height="500"></canvas>
 				</div>
 
-				<small>Preview at target resolution</small>
+				<small>按目标分辨率预览</small>
 
 				<canvas id="pv"></canvas>
 
 				<div class="slc">
-					<label>Dark Pixel Cutoff</label>
+					<label>暗像素截断阈值</label>
 					<input type="range" id="bt" min="0" max="255" value="0" class="sl">
 					<div style="display:flex;align-items:center;justify-content:center;margin-bottom:15px">
-						<label for="bg" style="margin-right:10px">Background Color</label>
+						<label for="bg" style="margin-right:10px">背景颜色</label>
 						<input type="color" id="bg" value="#000000">
 					</div>
 				</div>
 
 				<div style="display:none" id="sz">
 					<div>
-						<label>Output size:</label>
+						<label>输出尺寸：</label>
 						<input type="number" id="w" value="16" min="1" size="5">
 						x
 						<input type="number" id="h" value="16" min="1" size="5">
@@ -314,90 +314,90 @@ button, .btn {
 
 		<div class="row" style="margin-top:20px">
 			<div class="col">
-				<label for="fn">Filename</label>
+				<label for="fn">文件名</label>
 				<input type="text" id="fn" placeholder="image" maxlength="26">
-				<small>.gif will be added</small>
+				<small>将自动添加 .gif 后缀</small>
 			</div>
 		</div>
-		<button class="btn" id="up">Convert & Upload to WLED</button>
+		<button class="btn" id="up">转换 & 上传至 WLED</button>
 	</div>
 </div>
 
 <div id="xTab" class="tabc">
-	<h3 style="margin-top:20px;">Target Segment</h3>
+	<h3 style="margin-top:20px;">目标分段</h3>
 	<select id="segT"></select>
 	<div id="ti">
-		<h3>Text to show</h3>
+		<h3>显示文字</h3>
 		<div class="col" style="display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap">
-			<input type="text" id="txt" placeholder="Enter text" maxlength="64"  style="margin-left:15px;flex:1;min-width:300px;">
+			<input type="text" id="txt" placeholder="输入文字" maxlength="64"  style="margin-left:15px;flex:1;min-width:300px;">
 			<button class="btn" id="aTxt">✓</button>
 		</div>
-		<small style="display:block;text-align:center;">Preview - actual display may differ</small>
+		<small style="display:block;text-align:center;">预览（实际显示可能有所不同）</small>
 		<canvas id="tpv" width="100" height="50" style="background:#000;display:block;margin:10px auto;border-radius:8px;width:300px;height:150px;"></canvas>
 
-		<h3>Settings</h3>
+		<h3>设置</h3>
 		<div class="cs">
-				<div class="fr">Speed <input type="range" id="sx" min="0" max="255"></div>
-				<div class="fr">Y Offset <input type="range" id="ix" min="0" max="255"></div>
-				<div class="fr">Trail <input type="range" id="c1" min="0" max="255" value="0"></div>
-				<div class="fr">Font <input type="range" id="c2" min="3" max="255" step="63"></div>
-				<div class="fr">Rotate <input type="range" id="c3" min="3" max="31" step="7"></div>
+				<div class="fr">速度 <input type="range" id="sx" min="0" max="255"></div>
+				<div class="fr">纵向偏移 <input type="range" id="ix" min="0" max="255"></div>
+				<div class="fr">拖尾 <input type="range" id="c1" min="0" max="255" value="0"></div>
+				<div class="fr">字体 <input type="range" id="c2" min="3" max="255" step="63"></div>
+				<div class="fr">旋转 <input type="range" id="c3" min="3" max="31" step="7"></div>
 		</div>
 
 		<div class="col" style="display:flex;gap:20px;justify-content:center;">
 			<label style="display:flex;align-items:center;gap:5px">
-				<input type="checkbox" id="o1"> Gradient
+				<input type="checkbox" id="o1"> 渐变
 			</label>
 			<label style="display:flex;align-items:center;gap:5px">
-				<input type="checkbox" id="o2"> Custom Font
+				<input type="checkbox" id="o2"> 自定义字体
 			</label>
 			<label style="display:flex;align-items:center;gap:5px">
-				<input type="checkbox" id="o3"> Reverse
+				<input type="checkbox" id="o3"> 反向
 			</label>
 		</div>
 
-		<h3>Available Tokens</h3>
+		<h3>可用占位符</h3>
 		<div style="padding:15px;">
 			<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;text-align:left">
-				<div><a href="#" class="tk" data-t="#TIME">#TIME</a> - HH:MM AM/PM</div>
-				<div><a href="#" class="tk" data-t="#HHMM">#HHMM</a> - HH:MM</div>
-				<div><a href="#" class="tk" data-t="#DATE">#DATE</a> - DD.MM.YYYY</div>
-				<div><a href="#" class="tk" data-t="#DDMM">#DDMM</a> - Day.Month</div>
-				<div><a href="#" class="tk" data-t="#MMDD">#MMDD</a> - Month/Day</div>
-				<div><a href="#" class="tk" data-t="#YYYY">#YYYY</a> - Year</div>
-				<div><a href="#" class="tk" data-t="#YY">#YY</a> - Year 2-digit</div>
-				<div><a href="#" class="tk" data-t="#HH">#HH</a> - Hours</div>
-				<div><a href="#" class="tk" data-t="#MM">#MM</a> - Minutes</div>
-				<div><a href="#" class="tk" data-t="#SS">#SS</a> - Seconds</div>
-				<div><a href="#" class="tk" data-t="#MO">#MO</a> - Month number</div>
-				<div><a href="#" class="tk" data-t="#DD">#DD</a> - Day number</div>
-				<div><a href="#" class="tk" data-t="#MON">#MON</a> - Month (Jan)</div>
-				<div><a href="#" class="tk" data-t="#MONL">#MONL</a> - Month (January)</div>
-				<div><a href="#" class="tk" data-t="#DAY">#DAY</a> - Weekday (Mon)</div>
-				<div><a href="#" class="tk" data-t="#DDDD">#DDDD</a> - Weekday (Monday)</div>
+				<div><a href="#" class="tk" data-t="#TIME">#TIME</a> - 时:分 上午／下午</div>
+				<div><a href="#" class="tk" data-t="#HHMM">#HHMM</a> - 时:分</div>
+				<div><a href="#" class="tk" data-t="#DATE">#DATE</a> - 日.月.年</div>
+				<div><a href="#" class="tk" data-t="#DDMM">#DDMM</a> - 日.月</div>
+				<div><a href="#" class="tk" data-t="#MMDD">#MMDD</a> - 月/日</div>
+				<div><a href="#" class="tk" data-t="#YYYY">#YYYY</a> - 年</div>
+				<div><a href="#" class="tk" data-t="#YY">#YY</a> - 两位年份</div>
+				<div><a href="#" class="tk" data-t="#HH">#HH</a> - 小时</div>
+				<div><a href="#" class="tk" data-t="#MM">#MM</a> - 分钟</div>
+				<div><a href="#" class="tk" data-t="#SS">#SS</a> - 秒</div>
+				<div><a href="#" class="tk" data-t="#MO">#MO</a> - 月份数字</div>
+				<div><a href="#" class="tk" data-t="#DD">#DD</a> - 日期数字</div>
+				<div><a href="#" class="tk" data-t="#MON">#MON</a> - 月份简称</div>
+				<div><a href="#" class="tk" data-t="#MONL">#MONL</a> - 月份全称</div>
+				<div><a href="#" class="tk" data-t="#DAY">#DAY</a> - 星期简称</div>
+				<div><a href="#" class="tk" data-t="#DDDD">#DDDD</a> - 星期全称</div>
 			</div>
 			<div style="margin:10px;">
-				<strong>Tips:</strong></small><br>
-				• Mix text and tokens: "It's #HHMM O'Clock" or "#HH:#MM:#SS"<br>
-				• Add '0' suffix for leading zeros: #TIME0, #HH0, etc.
+				<strong>提示：</strong></small><br>
+				• 混合文字与占位符，例如：“现在是 #HHMM”或“#HH:#MM:#SS”<br>
+				• 添加后缀“0”可补齐前导零，例如：#TIME0、#HH0。
 			</div>
 			<hr>
-			<h3>Custom Fonts</h3>
-			<small>FX uses first 5 fonts only</small><br>
+			<h3>自定义字体</h3>
+			<small>灯效仅使用前 5 种字体</small><br>
 			<div id="fList" style="display:flex; flex-wrap:wrap; gap:8px; padding:10px; justify-content:center;"></div>
-			<button class="btn sml" id="dcf" style="margin:5px auto; display:block; font-size:11px;">Download Classic WLED Fonts</button>
+			<button class="btn sml" id="dcf" style="margin:5px auto; display:block; font-size:11px;">下载经典 WLED 字体</button>
 		</div>
 	</div>
-	<div id="ti1D" style="display:none;">Not available in 1D</div>
+	<div id="ti1D" style="display:none;">一维模式下不可用</div>
 </div>
 <div id="oTab" class="tabc">
 	<div id="tools">
-		<div style="padding:20px;text-align:center;">Loading tools...</div>
+		<div style="padding:20px;text-align:center;">正在加载工具……</div>
 	</div>
 </div>
 
 <div style="margin:20px 0">
-	<button class="btn" onclick="window.location.href=getURL('/')">Back to the controls</button>
+	<button class="btn" onclick="window.location.href=getURL('/')">返回控制界面</button>
 </div>
 
 <div id="ov"></div>
@@ -480,14 +480,14 @@ function segLoad(){
 		if(j.seg&&j.seg.length){
 			j.seg.forEach(({id,n,start,stop,startY,stopY,fx})=>{
 				const w=stop-start,h=(stopY-startY)||1;
-				const t = (n || `Segment ${id}`) + (h>1 ? ` (${w}x${h})` : ` (${w}px)`) + (fx===imgageFX ? ' [Image]' : (fx===txtFX ? ' [Scrolling Text]' : ''));
+				const t = (n || `Segment ${id}`) + (h>1 ? ` (${w}x${h})` : ` (${w}px)`) + (fx===imgageFX ? " [图片]" : (fx===txtFX ? " [滚动文字]" : ''));
 				const o=new Option(t,id);
 				o.dataset.w=w; o.dataset.h=h; o.dataset.fx=fx||0;
 				s1.add(o); // gif tool
 				s2.add(o.cloneNode(true)); // scrolling text tool
 			});
 		}else{
-			const o=new Option('Segment 0',0);
+			const o=new Option("分段 0",0);
 			s1.add(o); s2.add(o.cloneNode(true));
 		}
 		if(v1) s1.value=v1; if(v2) s2.value=v2;
@@ -536,7 +536,7 @@ async function imgLoad(){
 			grid.innerHTML='';
 			iL=[...newList];
 			if(!imgs.length){
-				grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#aaa;padding:20px">No images</div>';
+				grid.innerHTML="<div style=\"grid-column:1/-1;text-align:center;color:#aaa;padding:20px\">没有图片</div>";
 				return;
 			}
 			await imgLoad2(imgs);
@@ -647,25 +647,25 @@ function renderTools() {
 			</div>
 			${t.desc}
 			<div style="font-size:10px; color:#888;">
-				by ${esc(t.author)} | <a href="${safeUrl(t.source)}" target="_blank">${safeUrl(t.source)}</a>
+				作者 ${esc(t.author)} | <a href="${safeUrl(t.source)}" target="_blank">${safeUrl(t.source)}</a>
 			</div>
 			${
 				compatible ?
 					`<div class="crw">
 						${installed ?
-							  `<button class="btn" onclick="window.location.href=getURL('/${esc(t.file)}')">Open</button>`
-							: `<button class="btn" onclick="insT('${esc(t.id)}')">Install</button>`
+							  `<button class="btn" onclick="window.location.href=getURL('/${esc(t.file)}')">打开</button>`
+							: `<button class="btn" onclick="insT('${esc(t.id)}')">安装</button>`
 						}
 						${t.pending && installed ?
-							  `<button class="btn" style="color:#fb2" onclick="insT('${esc(t.id)}')">Update v${esc(t.pending.ver)}</button>`
+							  `<button class="btn" style="color:#fb2" onclick="insT('${esc(t.id)}')">更新至 v${esc(t.pending.ver)}</button>`
 							: ''
 						}
 				   </div>`
-				: `<div style="color:#f44;font-size:12px;"> Requires WLED ${esc(target.wled_min)} </div>`
+				: `<div style="color:#f44;font-size:12px;"> 需要 WLED ${esc(target.wled_min)} </div>`
 			}
 		</div>`;
 	});
-	getId('tools').innerHTML = h || 'No tools found (offline?).';
+	getId('tools').innerHTML = h || "未找到工具（可能处于离线状态）。";
 }
 
 // install or update tool
@@ -675,11 +675,11 @@ async function insT(id) {
 	try {
 		const src = t.pending || t;
 		const f = await fetch(src.url); // url in json must be pointing to a gz file
-		if (!f.ok) throw new Error("Download failed " + f.status);
+		if (!f.ok) throw new Error("下载失败 " + f.status);
 		const fd = new FormData();
 		fd.append("data", await f.blob(), src.file + '.gz'); // always use gz for file name (source MUST be gz)
 		const u = await fetch(getURL("/upload"), { method: "POST", body: fd });
-		alert(u.ok ? "Tool installed!" : "Install failed");
+		alert(u.ok ? "工具已安装！" : "安装失败");
 		if (u.ok && t.pending) {
 			// save and remove update info after successful update
 			Object.assign(t, t.pending);
@@ -688,7 +688,7 @@ async function insT(id) {
 		await saveToolsjson();
 		await flU(); // refresh file list
 		renderTools();
-	} catch(e) { alert("Error " + e.message); }
+	} catch(e) { alert("错误 " + e.message); }
 	fsMem(); // refresh memory info after upload
 	ovHide();
 }
@@ -700,7 +700,7 @@ async function fsMem(){
 		const info=await r.json();
 		if (info){
 			if (info.fs) {
-				getId("mem").textContent=`by @dedehai | Memory: ${info.fs.u} KB / ${info.fs.t} KB`;
+				getId("mem").textContent=`作者 @dedehai | 内存： ${info.fs.u} KB / ${info.fs.t} KB`;
 				getId("mem").style.display="block";
 			}
 			if (info.ver) {
@@ -757,7 +757,7 @@ function fileHandle() {
 				tctx.putImageData(new ImageData(new Uint8ClampedArray(gF[0].pixels), gI.width, gI.height), 0, 0);
 				imgShow(tc.toDataURL(), file.name);
 			} catch (err) {
-				msg('GIF load failed', 'err');
+				msg("GIF 加载失败", 'err');
 				console.error(err);
 			}
 		} else {
@@ -785,7 +785,7 @@ function imgShow(src, name) {
 	cI = new Image();
 	cI.onload = () => {
 		getId('ed').classList.add('active');
-		getId('drop').innerHTML = `<p>Image loaded: ${name}<br><small>Drop another to replace</small></p>`;
+		getId('drop').innerHTML = `<p>图片已加载： ${name}<br><small>拖放其他图片可替换</small></p>`;
 		getId('fn').value = name.split('.')[0].substring(0, 16);
 		viewReset();
 		cr.w = cv.width * 0.8; cr.h = cv.height * 0.8;
@@ -825,14 +825,15 @@ function gifStop(){ if(aT){ clearInterval(aT); aT=null; } }
 
 /* formats not supported by WLED */
 function unsup(url, name) {
-	alert(`Image format not supported.\nPlease convert to GIF or use PIXEL MAGIC TOOL`);
+	alert(`不支持此图片格式。
+请转换为 GIF 或使用像素魔法工具`);
 	fetch(url).then(r => r.blob()).then(b => {
 		const f = new File([b], name, { type: b.type });
 		const dt = new DataTransfer();
 		dt.items.add(f);
 		getId('src').files = dt.files;
 		fileHandle();
-	}).catch(() => msg('Failed to load image', 'err'));
+	}).catch(() => msg("加载图片失败", 'err'));
 }
 
 /* size change -> redraw */
@@ -865,7 +866,7 @@ getId('zoom').oninput=()=>{
 
 /* rotation */
 function rotUpd(v){
-	if(getId('snap').checked) v = Math.round(v/15)*15 % 360; // snap to multiples of 15°
+	if(getId("吸附").checked) v = Math.round(v/15)*15 % 360; // snap to multiples of 15°
 	rot = v;
 	getId('rotVal').textContent = v;
 	if(cI) crDraw();
@@ -1104,7 +1105,7 @@ getId('up').onclick = async () => {
 	const w = +getId('w').value, h = +getId('h').value, fn = getId('fn').value.trim() || 'image';
 	const filename = `${fn}.gif`;
 	const repl = iL.includes(filename);
-	if (repl && !confirm(`${filename} already exists. Overwrite?`)) return;
+	if (repl && !confirm(`${filename} 已存在，是否覆盖？`)) return;
 
 	ovShow();
 	try {
@@ -1169,14 +1170,14 @@ getId('up').onclick = async () => {
 		const r = await fetch(getURL('/upload'), { method: 'POST', body: fd });
 
 		if (r.ok) {
-			msg(`${filename} uploaded`);
+			msg(`${filename} 已上传`);
 			if (repl) imgRm(filename);
 			await imgLoad();
 			getId('src').value = '';
-			getId('drop').innerHTML = '<p>Drop image or click to select</p>';
-		} else msg('Upload failed', 'err');
+			getId('drop').innerHTML = "<p>拖放图片或点击选择</p>";
+		} else msg("上传失败", 'err');
 	} catch (e) {
-		msg(`Error: ${e.message}`, 'err');
+		msg(`错误： ${e.message}`, 'err');
 	} finally {
 		fsMem(); // refresh memory info after upload
 		ovHide();
@@ -1187,7 +1188,7 @@ getId('up').onclick = async () => {
 async function imgPlay(url,name){
 	const tgt=+getId('seg').value,cur=curImgSeg();
 	if(cur!==null && cur!==tgt){
-		if(!confirm(`Segment ${cur} is currently displaying an image. Switch image display to segment ${tgt}?`))return;
+		if(!confirm(`Segment ${cur} 当前正在显示图片。是否将图片显示切换到分段 ${tgt}?`))return;
 	}
 	ovShow();
 	try{
@@ -1200,10 +1201,10 @@ async function imgPlay(url,name){
 		const r=await fetch(getURL('/json/state'),{method:'POST',body:JSON.stringify(j)});
 		const out=await r.json();
 		if(out.success){
-			msg(`Playing ${name}`);
+			msg(`正在播放 ${name}`);
 			await segLoad();
-		}else msg('Failed to play','err');
-	}catch(e){msg(`Error: ${e.message}`,'err');}
+		}else msg("播放失败",'err');
+	}catch(e){msg(`错误： ${e.message}`,'err');}
 	finally{ovHide();}
 }
 
@@ -1214,8 +1215,8 @@ function menuShow(x,y){
 	m.className='cm';
 	m.style.left=x+'px'; m.style.top=y+'px';
 	m.innerHTML=`
-		<button onclick="imgDl()">Download</button>
-		<button class="danger" onclick="deleteFile(sI.name)">Delete</button>`;
+		<button onclick="imgDl()">下载</button>
+		<button class="danger" onclick="deleteFile(sI.name)">删除</button>`;
 	d.body.appendChild(m);
 	setTimeout(()=>{
 		const h=e=>{
@@ -1231,8 +1232,8 @@ async function imgDl(){
 		const r=await fetch(sI.url),b=await r.blob();
 		const u=URL.createObjectURL(b),a=cE('a');
 		a.href=u;a.download=sI.name;a.click();
-		URL.revokeObjectURL(u); msg('Downloaded');
-	}catch(e){msg('Download failed','err');}
+		URL.revokeObjectURL(u); msg("已下载");
+	}catch(e){msg("下载失败",'err');}
 	menuClose();
 }
 
@@ -1240,16 +1241,16 @@ async function deleteFile(name){
 	name = name.replace('/',''); // remove leading slash if present (just in case)
 	if (fL.some(f => f.name.replace('/','') === `${name}.gz`))
 		name += '.gz'; // if .gz version of file exists, delete that (handles tools which are stored gzipped on device)
-	if(!confirm(`Delete ${name}?`))return;
+	if(!confirm(`删除 ${name}?`))return;
 	ovShow();
 	try{
 		const r = await fetch(getURL(`/edit?func=delete&path=/${name}`));
 		if(r.ok){ 
-			msg('Deleted');
+			msg("已删除");
 			imgRm(name); // remove image from grid (if this was not an image, this does nothing)
 		}
-		else msg('Delete failed! File in use?','err');
-	}catch(e){msg('Delete failed','err');}
+		else msg("删除失败！文件可能正在使用。",'err');
+	}catch(e){msg("删除失败",'err');}
 	finally{ovHide();}
 	fsMem(); 			 // refresh memory info after delete
 	menuClose();   // close menu (used for image delete button)
@@ -1323,9 +1324,9 @@ getId('aTxt').onclick=async()=>{
 		const j={on:true,seg:{id,fx:122,n:txt,sx:+getId('sx').value,ix:+getId('ix').value,c1:+getId('c1').value,c2:+getId('c2').value,c3:+getId('c3').value,o1:getId('o1').checked,o3:getId('o3').checked}};
 		const r=await fetch(getURL('/json/state'),{method:'POST',body:JSON.stringify(j)});
 		const out=await r.json();
-		if(out.success!==false){ msg(`Applied to Segment ${id}`); await segLoad(); }
-		else msg('Failed to apply','err');
-	}catch(e){ msg(`Error: ${e.message}`,'err'); }
+		if(out.success!==false){ msg(`已应用至分段 ${id}`); await segLoad(); }
+		else msg("应用失败",'err');
+	}catch(e){ msg(`错误： ${e.message}`,'err'); }
 	finally{ ovHide(); }
 };
 
@@ -1334,21 +1335,21 @@ function scanFonts(){
     const wbf=(fL||[]).filter(f=>f.name.endsWith('.wbf'));
     getId('fList').innerHTML=wbf.map(f=>
         `<span>${f.name} <b onclick="delFont('${f.name}')" style="cursor:pointer;color:#8cf;padding:0 3px">✖</b></span>`
-    ).join('')||'<span style="color:#888">None</span>';
+    ).join('')||"<span style=\"color:#888\">无</span>";
 		getId('dcf').style.display=classics.every(fn=>wbf.some(f=>f.name===fn))?'none':'block'; // hide "Download classic fonts" button if all are present
 }
 
 // delete font file
 async function delFont(name){
-    if(!confirm(`Delete ${name}?`))return;
+    if(!confirm(`删除 ${name}?`))return;
     const r=await fetch(getURL(`/edit?func=delete&path=/${name}`));
-    r.ok?msg('Deleted'):msg('Delete failed','err');
+    r.ok?msg("已删除"):msg("删除失败",'err');
     await flU(); scanFonts();
 }
 
 // download classic WLED fonts from github and upload to FS
 getId('dcf').onclick=async()=>{
-    if(!confirm('Download classic WLED fonts?'))return;
+    if(!confirm("下载经典 WLED 字体？"))return;
     ovShow(); let ok=0,fail=0;
     for(const fn of classics){
         try{
@@ -1357,9 +1358,9 @@ getId('dcf').onclick=async()=>{
             const fd=new FormData();
             fd.append('data',await r.blob(),fn);
             (await fetch(getURL('/upload'),{method:'POST',body:fd})).ok?ok++:fail++;
-        }catch(e){msg(`Failed ${fn}: ${e.message}`,'err');}
+        }catch(e){msg(`失败 ${fn}: ${e.message}`,'err');}
     }
-    ovHide(); msg('Fonts installed');
+    ovHide(); msg("字体已安装");
     await flU(); scanFonts();
 };
 

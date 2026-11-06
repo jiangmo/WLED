@@ -85,7 +85,7 @@ static bool validateOTA(const uint8_t* binaryData, size_t dataSize, char* errorM
   } else {
     // No custom description - this could be a legacy binary
     if (errorMessage && errorMessageLen > 0) {
-      strncpy_P(errorMessage, PSTR("This firmware file is missing compatibility metadata."), errorMessageLen - 1);
+      strncpy_P(errorMessage, PSTR("固件文件缺少兼容性元数据。"), errorMessageLen - 1);
       errorMessage[errorMessageLen - 1] = '\0';
     }
     return false;
@@ -131,7 +131,7 @@ static bool unzipFlash(uint32_t flashBase, uint8_t* outBuf, char* errorMessage, 
 
   bool ok = false;
   if (uzlib_gzip_parse_header(&uncomp_ctx) != TINF_OK) {
-    strncpy_P(errorMessage, PSTR("Invalid gzip header in OTA firmware"), errorMessageLen - 1);
+    strncpy_P(errorMessage, PSTR("OTA 固件的 gzip 文件头无效"), errorMessageLen - 1);
     errorMessage[errorMessageLen - 1] = '\0';
   } else {
     uncomp_ctx.dest_start = uncomp_ctx.dest = outBuf;
@@ -141,7 +141,7 @@ static bool unzipFlash(uint32_t flashBase, uint8_t* outBuf, char* errorMessage, 
     if (uncomp_ctx.dest >= uncomp_ctx.dest_limit) {
       ok = true;
     } else {
-      strncpy_P(errorMessage, PSTR("Not enough decompressed data for validation"), errorMessageLen - 1);
+      strncpy_P(errorMessage, PSTR("解压后的数据不足，无法校验"), errorMessageLen - 1);
       errorMessage[errorMessageLen - 1] = '\0';
     }
   }
@@ -171,7 +171,7 @@ static void validateGzippedOTA(UpdateContext* context) {
   if (!ok) {
     DEBUG_PRINTF_P(PSTR("OTA declined: %s\n"), errorMessage);
     context->errorMessage = errorMessage;
-    context->errorMessage += F(" Enable 'Ignore firmware validation' to proceed anyway.");
+    context->errorMessage += F(" 如仍要继续，请启用“忽略固件校验”。");
     return;
   }
 
@@ -289,7 +289,7 @@ void setOTAReplied(AsyncWebServerRequest *request) {
 // Ready:    result available; empty string = success (200), non-empty = failure (500).
 std::pair<OTAResultStatus, String> getOTAResult(AsyncWebServerRequest* request) {
   UpdateContext* context = reinterpret_cast<UpdateContext*>(request->_tempObject);
-  if (!context) return { OTAResultStatus::Ready, F("OTA context unexpectedly missing") };
+  if (!context) return { OTAResultStatus::Ready, F("OTA 上下文意外丢失") };
   if (context->replySent) return { OTAResultStatus::Replied, {} };
 
   #ifdef SUPPORT_GZIPPED_OTA
@@ -314,7 +314,7 @@ std::pair<OTAResultStatus, String> getOTAResult(AsyncWebServerRequest* request) 
   }
 
   // Should never happen
-  return { OTAResultStatus::Ready, F("Internal software failure") };
+  return { OTAResultStatus::Ready, F("软件内部错误") };
 }
 
 
@@ -376,7 +376,7 @@ void handleOTAData(AsyncWebServerRequest *request, size_t index, uint8_t *data, 
         if (!OTA_ok) {
           DEBUG_PRINTF_P(PSTR("OTA declined: %s\n"), errorMessage);
           context->errorMessage = errorMessage;
-          context->errorMessage += F(" Enable 'Ignore firmware validation' to proceed anyway.");
+          context->errorMessage += F(" 如仍要继续，请启用“忽略固件校验”。");
           return;
         } else {
           DEBUG_PRINTLN(F("OTA allowed: Release compatibility check passed"));
@@ -402,7 +402,7 @@ void handleOTAData(AsyncWebServerRequest *request, size_t index, uint8_t *data, 
   // This is done before writing the last chunk, so endOTA can abort
   if (isFinal && !context->releaseCheckPassed) {
     DEBUG_PRINTLN(F("OTA failed: Validation never completed"));
-    context->errorMessage = F("Release check data never arrived?");
+    context->errorMessage = F("未收到版本校验数据");
     return;
   }
 
@@ -627,7 +627,7 @@ static bool verifyBootloaderImage(const uint8_t* &buffer, size_t &len, String& b
 
   // 1. Validate minimum size for header
   if (len < MIN_IMAGE_HEADER_SIZE) {
-    bootloaderErrorMsg = "Too small";
+    bootloaderErrorMsg = "文件过小";
     return false;
   }
 
@@ -643,7 +643,7 @@ static bool verifyBootloaderImage(const uint8_t* &buffer, size_t &len, String& b
 
     // Re-validate size after adjustment
     if (len < MIN_IMAGE_HEADER_SIZE) {
-      bootloaderErrorMsg = "Too small";
+      bootloaderErrorMsg = "文件过小";
       return false;
     }
   }
@@ -657,13 +657,13 @@ static bool verifyBootloaderImage(const uint8_t* &buffer, size_t &len, String& b
       imageHeader.segment_count == 0 || imageHeader.segment_count > 16 ||
       imageHeader.spi_mode > 3 ||
       imageHeader.entry_addr < 0x40000000 || imageHeader.entry_addr > 0x50000000) {
-    bootloaderErrorMsg = "Invalid header";
+    bootloaderErrorMsg = "文件头无效";
     return false;
   }
 
   // 3. Chip ID validation (matches esp_image_verify step 3)
   if (imageHeader.chip_id != CONFIG_IDF_FIRMWARE_CHIP_ID) {
-    bootloaderErrorMsg = "Chip ID mismatch";
+    bootloaderErrorMsg = "芯片 ID 不匹配";
     return false;
   }
 
@@ -671,7 +671,7 @@ static bool verifyBootloaderImage(const uint8_t* &buffer, size_t &len, String& b
   BootloaderImageSizer sizer;
   sizer.feed(buffer, availableLen);
   if (!sizer.isSizeKnown()) {
-    bootloaderErrorMsg = "Invalid image";
+    bootloaderErrorMsg = "镜像无效";
     return false;
   }
   size_t actualBootloaderSize = sizer.totalSize();
@@ -683,7 +683,7 @@ static bool verifyBootloaderImage(const uint8_t* &buffer, size_t &len, String& b
 
   if (actualBootloaderSize > len) {
     // Same as above
-    bootloaderErrorMsg = "Too small";
+    bootloaderErrorMsg = "文件过小";
     return false;
   }
 
@@ -750,7 +750,7 @@ bool initBootloaderOTA(AsyncWebServerRequest *request) {
   request->onDisconnect([=]() { endBootloaderOTA(request); });  // ensures cleanup on disconnect
 
 #ifdef BOOTLOADER_OTA_UNSUPPORTED
-  context->errorMessage = F("Bootloader update not supported on this chip");
+  context->errorMessage = F("此芯片不支持引导程序更新");
   return false;
 #else
   DEBUG_PRINTLN(F("Bootloader Update Start - initializing buffer"));
@@ -768,7 +768,7 @@ bool initBootloaderOTA(AsyncWebServerRequest *request) {
   if (!context->buffer) {
     size_t freeHeapNow = getContiguousFreeHeap();
     DEBUG_PRINTF_P(PSTR("Failed to allocate %d byte bootloader buffer! Contiguous heap: %d bytes\n"), context->maxBootloaderSize, freeHeapNow);
-    context->errorMessage = "Out of memory! Contiguous heap: " + String(freeHeapNow) + " bytes, need: " + String(context->maxBootloaderSize) + " bytes";
+    context->errorMessage = "内存不足！连续堆内存：" + String(freeHeapNow) + " 字节，需要：" + String(context->maxBootloaderSize) + " 字节";
     strip.resume();
     #if WLED_WATCHDOG_TIMEOUT > 0
     WLED::instance().enableWatchdog();
@@ -794,7 +794,7 @@ std::pair<bool, String> getBootloaderOTAResult(AsyncWebServerRequest *request) {
   BootloaderUpdateContext* context = reinterpret_cast<BootloaderUpdateContext*>(request->_tempObject);
 
   if (!context) {
-    return std::make_pair(true, String(F("Internal error: No bootloader OTA context")));
+    return std::make_pair(true, String(F("内部错误：缺少引导程序 OTA 上下文")));
   }
 
   bool needsReply = !context->replySent;
@@ -814,7 +814,7 @@ std::pair<bool, String> getBootloaderOTAResult(AsyncWebServerRequest *request) {
   }
 
   // Should never happen
-  return std::make_pair(true, String(F("Internal software failure")));
+  return std::make_pair(true, String(F("软件内部错误")));
 }
 
 // Handle bootloader OTA data
@@ -837,12 +837,12 @@ void handleBootloaderOTAData(AsyncWebServerRequest *request, size_t index, uint8
     DEBUG_PRINTF_P(PSTR("Bootloader buffer progress: %d / %d bytes\n"), context->bytesBuffered, context->maxBootloaderSize);
   } else if (!context->buffer) {
     DEBUG_PRINTLN(F("Bootloader buffer not allocated!"));
-    context->errorMessage = "Internal error: Bootloader buffer not allocated";
+    context->errorMessage = "内部错误：未分配引导程序缓冲区";
     return;
   } else {
     size_t totalSize = context->bytesBuffered + len;
     DEBUG_PRINTLN(F("Bootloader size exceeds maximum!"));
-    context->errorMessage = "Bootloader file too large: " + String(totalSize) + " bytes (max: " + String(context->maxBootloaderSize) + " bytes)";
+    context->errorMessage = "引导程序文件过大：" + String(totalSize) + " 字节（最大：" + String(context->maxBootloaderSize) + " 字节）";
     return;
   }
 
@@ -892,13 +892,13 @@ void handleBootloaderOTAData(AsyncWebServerRequest *request, size_t index, uint8
         esp_err_t err = esp_flash_erase_region(NULL, flashOffset, eraseSize);
         if (err != ESP_OK) {
           DEBUG_PRINTF_P(PSTR("Bootloader erase error: %d\n"), err);
-          context->errorMessage = "Flash erase failed (error code: " + String(err) + ")";
+          context->errorMessage = "闪存擦除失败（错误码：" + String(err) + ")";
         } else {
           // Write the validated bootloader data to flash
           err = esp_flash_write(NULL, dataToWrite, flashOffset, bytesToWrite);
           if (err != ESP_OK) {
             DEBUG_PRINTF_P(PSTR("Bootloader flash write error: %d\n"), err);
-            context->errorMessage = "Flash write failed (error code: " + String(err) + ")";
+            context->errorMessage = "闪存写入失败（错误码：" + String(err) + ")";
           } else {
             DEBUG_PRINTF_P(PSTR("Bootloader Update Success - %d bytes written to 0x%04X\n"),
                            bytesToWrite, flashOffset);
@@ -909,7 +909,7 @@ void handleBootloaderOTAData(AsyncWebServerRequest *request, size_t index, uint8
         }
       }
     } else if (context->bytesBuffered == 0) {
-      context->errorMessage = "No bootloader data received";
+      context->errorMessage = "未收到引导程序数据";
     }
   }
 }

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="@ajotanc" />
 
-    <title>Pixel Magic Tool</title>
+    <title>像素魔法工具</title>
 
     <style>
       :root {
@@ -570,21 +570,21 @@
         <form id="formGenerate" novalidate>
           <div class="header">
             <span class="title"
-              >PIXEL <span class="rainbow">MAGIC</span> TOOL</span
+              >像素 <span class="rainbow">魔法</span> 工具</span
             >
             <span class="subtitle"
-              >It is a tool that converts any image into code in
-              <strong>JSON WLED</strong> format for
-              <strong>2D Matrix</strong> panels</span
+              >本工具可将图片转换为
+              <strong>JSON WLED</strong> 格式，用于
+              <strong>二维矩阵</strong> 面板</span
             >
           </div>
           <div class="row">
             <div class="col" validate>
-              <label for="hostname">Hostname</label>
+              <label for="hostname">主机名</label>
               <input type="text" name="hostname" id="hostname" required />
             </div>
             <div class="col" validate>
-              <label for="name">Preset Name</label>
+              <label for="name">预设名称</label>
               <input
                 type="text"
                 name="name"
@@ -596,19 +596,19 @@
           <div class="row">
             <div class="col" validate>
               <div class="custom-select">
-                <label for="pattern">Pattern</label>
+                <label for="pattern">模式</label>
                 <select name="pattern" id="pattern" required>
-                  <option value="1" title="['ffffff']">Individual</option>
-                  <option value="2" title="[0, 'ffffff']">Index</option>
+                  <option value="1" title="['ffffff']">单个</option>
+                  <option value="2" title="[0, 'ffffff']">索引</option>
                   <option value="3" title="[0, 5, 'ffffff']" selected>
-                    Range
+                    范围
                   </option>
                 </select>
               </div>
             </div>
             <div class="col" validate>
               <div class="custom-select">
-                <label for="output">Output</label>
+                <label for="output">输出</label>
                 <select name="output" id="output" required>
                   <option value="json" selected>WLED JSON</option>
                   <option value="ha">Home Assistant</option>
@@ -619,15 +619,15 @@
           </div>
           <div class="row output" style="display: none">
             <div class="col" validate>
-              <label for="device">Device</label>
+              <label for="device">设备</label>
               <input type="text" name="device" id="device" required />
             </div>
             <div class="col" validate>
-              <label for="uniqueId">Unique Id</label>
+              <label for="uniqueId">唯一 ID</label>
               <input type="text" name="uniqueId" id="uniqueId" required />
             </div>
             <div class="col" validate>
-              <label for="friendlyName">Friendly Name</label>
+              <label for="friendlyName">显示名称</label>
               <input
                 type="text"
                 name="friendlyName"
@@ -638,16 +638,16 @@
           <div class="row">
             <div class="col" validate>
               <div class="custom-select">
-                <label for="segments">Segment Id</label>
+                <label for="segments">分段 ID</label>
                 <select name="segments" id="segments">
                   <option value="0" data-width="16" data-height="16">
-                    Segment 0
+                    分段 0
                   </option>
                 </select>
               </div>
             </div>
             <div class="col" validate>
-              <label for="brightness">Brightness</label>
+              <label for="brightness">亮度</label>
               <div class="input-group">
                 <input
                   type="range"
@@ -669,7 +669,7 @@
           </div>
           <div class="row">
             <div class="col" validate>
-              <label for="animation">Animation</label>
+              <label for="animation">动画</label>
               <label class="switch">
                 <input
                   type="checkbox"
@@ -680,7 +680,7 @@
               </label>
             </div>
             <div class="col" validate>
-              <label for="transparentImage">Transparent Image</label>
+              <label for="transparentImage">透明图片</label>
               <label class="switch">
                 <input
                   type="checkbox"
@@ -691,7 +691,7 @@
               </label>
             </div>
             <div class="col" validate>
-              <label for="resizeImage">Resize Image</label>
+              <label for="resizeImage">调整图片尺寸</label>
               <label class="switch">
                 <input
                   type="checkbox"
@@ -705,21 +705,21 @@
           </div>
           <div class="row resizeImage">
             <div class="col" validate>
-              <label for="width">Width</label>
+              <label for="width">宽度</label>
               <input type="number" name="width" id="width" value="16" />
             </div>
             <div class="col" validate>
-              <label for="height">Height</label>
+              <label for="height">高度</label>
               <input type="number" name="height" id="height" value="16" />
             </div>
           </div>
           <div class="row animation" style="display: none">
             <div class="col" validate>
-              <label for="frames">Frames</label>
+              <label for="frames">帧数</label>
               <input type="number" name="frames" id="frames" value="4" />
             </div>
             <div class="col" validate>
-              <label for="duration">Duration</label>
+              <label for="duration">时长</label>
               <div class="input-group">
                 <input
                   type="number"
@@ -731,12 +731,12 @@
                   step="0.1"
                   inputmode="numeric" />
                 <div class="input-description">
-                  <span>sec</span>
+                  <span>秒</span>
                 </div>
               </div>
             </div>
             <div class="col" validate>
-              <label for="transition">Transition</label>
+              <label for="transition">过渡</label>
               <div class="input-group">
                 <input
                   type="number"
@@ -748,17 +748,17 @@
                   step="0.1"
                   inputmode="numeric" />
                 <div class="input-description">
-                  <span>sec</span>
+                  <span>秒</span>
                 </div>
               </div>
             </div>
           </div>
           <div class="row transparentImage" style="display: none">
             <div class="col-full" validate>
-              <label for="color">Choose a color</label>
+              <label for="color">选择颜色</label>
               <small>
-                Color that will replace the
-                <strong>transparent pixels</strong> in the image
+                此颜色将替换
+                <strong>透明像素</strong> （图片中）
               </small>
               <input type="color" name="color" id="color" value="#00BFFF" />
             </div>
@@ -767,20 +767,20 @@
             <div class="col-full" validate>
               <div class="custom-select">
                 <label for="images">
-                  <span>Images upload to WLED</span>
+                  <span>上传图片至 WLED</span>
                   <a id="wledEdit" href="http://[wled-ip]/edit" target="_blank">
-                    upload
+                    上传
                   </a>
                 </label>
                 <select name="images" id="images">
-                  <option value="">Select image</option>
+                  <option value="">选择图片</option>
                 </select>
               </div>
             </div>
           </div>
           <div id="dropzone" class="dropzone" validate>
             <p id="dropzoneLabel">
-              Drag and drop a file here or click to select a local file
+              将文件拖放到此处，或点击选择本地文件
             </p>
             <input
               type="file"
@@ -792,7 +792,7 @@
           <div class="row">
             <div class="col-full">
               <button type="button" class="button" id="btnGenerate">
-                Generate
+                生成
               </button>
             </div>
             <div class="col-small" id="gbth" style="display: none">
@@ -800,7 +800,7 @@
                 type="button"
                 class="button"
                 onclick="window.location.href = WLED_URL;">
-                Back
+                返回
               </button>
             </div>
           </div>
@@ -813,22 +813,22 @@
             <div class="row">
               <div class="col">
                 <button type="button" class="button" id="btnCopyToClipboard">
-                  Copy to Clipboard
+                  复制到剪贴板
                 </button>
               </div>
               <div class="col">
-                <button type="button" class="button" id="btnSave">Save</button>
+                <button type="button" class="button" id="btnSave">保存</button>
               </div>
               <div class="col">
                 <button type="button" class="button" id="btnDownloadPreset">
-                  Download
+                  下载
                 </button>
               </div>
             </div>
             <div class="row" id="simulate" style="display: none">
               <div class="col-full">
                 <button type="button" class="button" id="btnSimulatePreset">
-                  Simulate
+                  模拟
                 </button>
               </div>
             </div>
@@ -837,7 +837,7 @@
       </div>
       <footer>
         <a href="https://github.com/ajotanc/PixelMagicTool" target="_blank">
-          Github &copy; Pixel Magic Tool
+          Github &copy; 像素魔法工具
         </a>
       </footer>
     </div>
@@ -946,10 +946,10 @@
           const { success } = await response.json();
 
           if (success) {
-            toast(`Playlist "${name}" save successfully`);
+            toast(`播放列表“${name}”保存成功`);
           }
         } catch (error) {
-          toast(`Error saving preset: ${error}`, "error");
+          toast(`保存预设失败： ${error}`, "error");
         }
       } catch (error) {
         toast(error, "error");
@@ -991,11 +991,11 @@
                 const { success } = await response.json();
 
                 if (success) {
-                  toast(`Preset "${item.n}" save successfully`);
+                  toast(`预设“${item.n}”保存成功`);
                   window.parent.postMessage("loadPresets", WLED_URL);
                 }
               } catch (error) {
-                toast(`Error saving preset: ${error}`, "error");
+                toast(`保存预设失败： ${error}`, "error");
               }
             } catch (error) {
               toast(error, "error");
@@ -1041,7 +1041,7 @@
           return mimeTypes.includes(mimetype);
         });
 
-        const options = [{ text: "Select image", value: "" }];
+        const options = [{ text: "选择图片", value: "" }];
 
         if (images.length > 0) {
           options.push(
@@ -1083,7 +1083,7 @@
         const { seg: segments } = await response.json();
 
         const options = [
-          { text: "Segment Default", value: 0, width: 16, height: 16 },
+          { text: "默认分段", value: 0, width: 16, height: 16 },
         ];
 
         if (segments) {
@@ -1130,7 +1130,7 @@
       source.files = e.dataTransfer.files;
 
       const { name } = source.files[0];
-      gId("dropzoneLabel").textContent = `Image ${name} selected!`;
+      gId("dropzoneLabel").textContent = `图片 ${name} 已选择！`;
 
       validate(e);
     });
@@ -1145,10 +1145,10 @@
 
       if (value) {
         const { name } = e.target.files[0];
-        dropzoneLabel.textContent = `Image ${name} selected!`;
+        dropzoneLabel.textContent = `图片 ${name} 已选择！`;
       } else {
         dropzoneLabel.textContent =
-          "Drag and drop a file here or click to select a file";
+          "拖放文件到此处，或点击选择文件";
       }
 
       validate(e);
@@ -1169,7 +1169,7 @@
         const { success } = await response.json();
 
         if (success) {
-          toast("Successfully simulated preset");
+          toast("预设模拟成功");
         }
       } catch (error) {
         toast(error, "error");
@@ -1202,11 +1202,11 @@
 
       try {
         await navigator.clipboard.writeText(response.value);
-        toast("Text copied to clipboard");
+        toast("文本已复制到剪贴板");
       } catch (error) {
         try {
           await d.execCommand("copy");
-          toast("Text copied to clipboard");
+          toast("文本已复制到剪贴板");
         } catch (error) {
           toast(error, "error");
         }
@@ -1259,7 +1259,7 @@
         const source = gId("source");
 
         gId("dropzoneLabel").textContent =
-          "Drag and drop a file here or click to select a local file";
+          "将文件拖放到此处，或点击选择本地文件";
         source.value = "";
 
         dropzone.style.display = "block";
@@ -1290,7 +1290,7 @@
 
       if (checked) {
         toast(
-          'If you want all frames in the image, set it to "0"',
+          "如需使用图片的全部帧，请设为“0”",
           "warning",
           5000
         );
@@ -1917,8 +1917,8 @@
       const browserLanguage = navigator.language || navigator.userLanguage;
       const messageRequired =
         browserLanguage === "pt-br"
-          ? "Este campo é obrigatório"
-          : "This field is required";
+          ? "此项为必填项"
+          : "此项为必填项";
 
       inputs.forEach((input) => {
         const parent = input.closest("[validate]");
