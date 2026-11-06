@@ -828,7 +828,7 @@ function onLoad()
 			if (cfg.comp.css) await loadSkinCSS('skinCss');
 			if (!ws) makeWS();
 		} catch(e) {
-			showToast("Init failed: " + e, true);
+			showToast("初始化失败：" + e, true);
 		}
 	})();
 	resetUtil();
@@ -1177,8 +1177,8 @@ function parseInfo(i) {
 	if (!name.match(/[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f\u3131-\uD79D]/))
 		gId('namelabel').style.transform = "rotate(180deg)"; // rotate if no CJK characters
 	if (name === "Dinnerbone") d.documentElement.style.transform = "rotate(180deg)"; // Minecraft easter egg
-	if (i.live) name = "(Live) " + name;
-	if (loc)    name = "(L) " + name;
+	if (i.live) name = "（实时）" + name;
+	if (loc)    name = "（本地）" + name;
 	d.title      = name;
 	simplifiedUI = i.simplifiedui;
 	ledCount     = i.leds.count;
@@ -2364,7 +2364,7 @@ function toggleNl()
 	nlA = !nlA;
 	if (nlA)
 	{
-		showToast(`定时器已启用，灯光将切换状态 ${nlTar > 0 ? "on":"off"} ${nlMode ? "over":"after"} ${nlDur} 分钟。`);
+		showToast(`定时器已启用，灯光将切换状态 ${nlTar > 0 ? "开启":"关闭"}，${nlMode ? "渐变时长":"等待时长"} ${nlDur} 分钟。`);
 	} else {
 		showToast("定时器已停用。");
 	}
